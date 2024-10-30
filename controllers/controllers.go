@@ -9,8 +9,10 @@ import (
 )
 
 func Index(ctx *gin.Context){
-	ctx.JSON(200,gin.H{
-		"status":"Ok",
+	var alunos []models.Aluno
+	database.DB.Find(&alunos)
+	ctx.HTML(200,"index.html",gin.H{
+		"alunos":alunos,
 	})
 }
 
@@ -99,4 +101,8 @@ func FindByCpf(ctx *gin.Context){
 		return
 	}
 	ctx.JSON(200,aluno)
+}
+
+func NotFound(ctx *gin.Context){
+	ctx.HTML(404,"404.html",nil)
 }
